@@ -57,6 +57,8 @@ def main():
         paired_bam_filename = str(round_num) + '_paired_alignments.bam'
         unpaired_bam_filename = str(round_num) + '_unpaired_alignments.bam'
         for f in [input_filename,
+                  input_filename + '.gfa',
+                  input_filename + '.fasta',
                   input_filename + '.1.bt2', input_filename + '.2.bt2',
                   input_filename + '.3.bt2', input_filename + '.4.bt2',
                   input_filename + '.rev.1.bt2', input_filename + '.rev.2.bt2',
@@ -67,12 +69,16 @@ def main():
             except FileNotFoundError:
                 pass
 
+        graph.save_to_gfa(input_filename + '.gfa')
+        graph.save_to_fasta(input_filename + '.fasta')
+
         if not change_count:
             break
 
     graph.save_to_gfa(args.output + '.gfa')
     graph.save_to_fasta(args.output + '.fasta')
     unicycler.log.log('')
+
 
 
 def get_arguments():
